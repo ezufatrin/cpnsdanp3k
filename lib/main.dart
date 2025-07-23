@@ -1,4 +1,4 @@
-import 'package:cpnsdanp3k/homePage.dart';
+import 'package:SiapNgabdi/splashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Latihan Soal CPNS',
-      home: Homepage(),
+      home: SplashScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
