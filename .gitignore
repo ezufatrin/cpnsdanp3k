@@ -36,4 +36,4 @@ ios/Flutter/.last_patch_build
 *.DS_Store # macOS specific
 .env 
 *.apk
-assets/
+assets/materi/

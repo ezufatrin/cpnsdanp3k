@@ -3,9 +3,9 @@ import 'pdfViewPage.dart';
 
 class MateriPage extends StatelessWidget {
   final List<Map<String, String>> materiList = [
-    {'title': 'Materi TWK', 'file': 'assets/materitwk.pdf'},
-    {'title': 'Materi TIU', 'file': 'assets/materitiu.pdf'},
-    {'title': 'Materi TKP', 'file': 'assets/materitkp.pdf'},
+    {'title': 'Materi TWK', 'file': 'assets/materi/materitwk.pdf'},
+    {'title': 'Materi TIU', 'file': 'assets/materi/materitiu.pdf'},
+    {'title': 'Materi TKP', 'file': 'assets/materi/materitkp.pdf'},
   ];
 
   MateriPage({super.key});
