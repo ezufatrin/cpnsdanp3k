@@ -34,4 +34,6 @@ ios/Flutter/.last_patch_build
 # Other common ignores
 *.log
 *.DS_Store # macOS specific
-.env # For environment variables
+.env 
+*.apk
+assets/
