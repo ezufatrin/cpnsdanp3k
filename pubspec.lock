@@ -81,6 +81,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.19.1"
+  connectivity_plus:
+    dependency: "direct main"
+    description:
+      name: connectivity_plus
+      sha256: "051849e2bd7c7b3bc5844ea0d096609ddc3a859890ec3a9ac4a65a2620cc1f99"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.1.4"
+  connectivity_plus_platform_interface:
+    dependency: transitive
+    description:
+      name: connectivity_plus_platform_interface
+      sha256: "42657c1715d48b167930d5f34d00222ac100475f73d10162ddf43e714932f204"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
   convert:
     dependency: transitive
     description:
@@ -105,6 +121,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.8"
+  dbus:
+    dependency: transitive
+    description:
+      name: dbus
+      sha256: "79e0c23480ff85dc68de79e2cd6334add97e48f7f4865d17686dd6ea81a47e8c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.7.11"
   device_info_plus:
     dependency: transitive
     description:
@@ -159,7 +183,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_launcher_icons:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: flutter_launcher_icons
       sha256: "10f13781741a2e3972126fae08393d3c4e01fa4cd7473326b94b72cf594195e7"
@@ -167,15 +191,23 @@ packages:
     source: hosted
     version: "0.14.4"
   flutter_lints:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: flutter_lints
       sha256: "5398f14efa795ffb7a33e9b6a08798b26a180edac4ad7db3f231e40f82ce11e1"
       url: "https://pub.dev"
     source: hosted
     version: "5.0.0"
+  flutter_pdfview:
+    dependency: "direct main"
+    description:
+      name: flutter_pdfview
+      sha256: c402ad1f51ba8ea73b9fb04c003ca0a9286118ba5ac9787ee2aa58956b3fcf8a
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.4.1+1"
   flutter_riverpod:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: flutter_riverpod
       sha256: "9532ee6db4a943a1ed8383072a2e3eeda041db5657cdf6d2acecf3c21ecbe7e1"
@@ -336,6 +368,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.6"
+  nm:
+    dependency: transitive
+    description:
+      name: nm
+      sha256: "2c9aae4127bdc8993206464fcc063611e0e36e72018696cd9631023a31b24254"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.0"
   path:
     dependency: transitive
     description:
@@ -345,7 +385,7 @@ packages:
     source: hosted
     version: "1.9.1"
   path_provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path_provider
       sha256: "50c5dd5b6e1aaf6fb3a78b33f6aa3afca52bf903a8a5298f53101fdaee55bbcd"
@@ -465,7 +505,7 @@ packages:
     source: hosted
     version: "0.27.7"
   scrollable_positioned_list:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: scrollable_positioned_list
       sha256: "1b54d5f1329a1e263269abc9e2543d90806131aa14fe7c6062a8054d57249287"
@@ -473,7 +513,7 @@ packages:
     source: hosted
     version: "0.3.8"
   shared_preferences:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: shared_preferences
       sha256: "6e8bf70b7fef813df4e9a36f658ac46d107db4b4cfe1048b477d4e453a8159f5"
@@ -534,7 +574,7 @@ packages:
     source: sdk
     version: "0.0.0"
   smooth_page_indicator:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: smooth_page_indicator
       sha256: b21ebb8bc39cf72d11c7cfd809162a48c3800668ced1c9da3aade13a32cf6c1c
@@ -606,7 +646,7 @@ packages:
     source: hosted
     version: "2.8.0"
   supabase_flutter:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: supabase_flutter
       sha256: "66b8d0a7a31f45955b11ad7b65347abc61b31e10f8bdfa4428501b81f5b30fa5"
@@ -630,7 +670,7 @@ packages:
     source: hosted
     version: "30.1.41"
   syncfusion_flutter_pdfviewer:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: syncfusion_flutter_pdfviewer
       sha256: "7684592d9f65866dfc3c6cc28d55b282a7b78a1a3f79a80a3bd3f538291ac4c5"
