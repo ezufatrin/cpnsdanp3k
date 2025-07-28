@@ -1,5 +1,8 @@
-import 'package:SiapNgabdi/splashScreen.dart';
+// import 'package:siapngabdi/auth_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:siapngabdi/contoh.dart';
+import 'package:siapngabdi/core/theme/theme.dart';
+import 'package:siapngabdi/main_navigation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -14,11 +17,14 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Latihan Soal CPNS',
-      home: SplashScreen(),
+      home: MainNavigation(),
+      theme: appTheme,
       debugShowCheckedModeBanner: false,
     );
   }

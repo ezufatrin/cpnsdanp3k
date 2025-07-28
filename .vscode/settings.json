@@ -1,3 +1,4 @@
 {
-    "dart.flutterSdkPath": "/usr/local"
+    "dart.flutterSdkPath": "/usr/local",
+    "CodeGPT.apiKey": "Ollama"
 }

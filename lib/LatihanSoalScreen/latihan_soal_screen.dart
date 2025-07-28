@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'soal_provider.dart';
+import '../soal_provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 final soalKeysProvider = StateProvider<Map<int, List<GlobalKey>>>((ref) => {});
@@ -69,7 +69,7 @@ class _LatihanSoalState extends ConsumerState<LatihanSoal> {
         backgroundColor: isSelected ? Colors.blue : Colors.grey[300],
         foregroundColor: isSelected ? Colors.white : Colors.black,
       ),
-      child: Text(label + ": $jumlahJawaban/${soalList.length}"),
+      child: Text("$label: $jumlahJawaban/${soalList.length}"),
     );
   }
 
@@ -78,8 +78,6 @@ class _LatihanSoalState extends ConsumerState<LatihanSoal> {
     final kategoriId = ref.watch(kategoriAktifProvider);
     final soalList = ref.watch(soalPerKategoriProvider)[kategoriId] ?? [];
     final jawabanPerKategori = ref.watch(jawabanPerKategoriProvider);
-    final jumlahJawaban = jawabanPerKategori[kategoriId]?.length ?? 0;
-    final soalKeys = ref.watch(soalKeysProvider)[kategoriId] ?? [];
     final itemScrollController = ref.watch(itemScrollControllerProvider);
     final itemPositionsListener = ref.watch(itemPositionsListenerProvider);
 

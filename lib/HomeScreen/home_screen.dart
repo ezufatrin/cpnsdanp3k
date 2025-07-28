@@ -1,9 +1,11 @@
 import 'dart:async';
 
-import 'package:SiapNgabdi/LatihanSoal.dart';
-import 'package:SiapNgabdi/materiPage.dart';
-import 'package:SiapNgabdi/simulasiPage.dart';
-import 'package:SiapNgabdi/tipsPage.dart';
+import 'package:siapngabdi/LatihanSoalScreen/latihan_soal_screen.dart';
+import 'package:siapngabdi/core/theme/colors.dart';
+import 'package:siapngabdi/core/theme/typography.dart';
+import 'package:siapngabdi/features/materi/ui/materi_screen.dart';
+import 'package:siapngabdi/features/simulasi/ui/simulasi_screen.dart';
+import 'package:siapngabdi/tipsPage.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -56,7 +58,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF9F9F9),
+      backgroundColor: AppColors.background,
       appBar: AppBar(
         backgroundColor: const Color(0xFF007BFF), // Warna biru dari logo
         title: const Text("Siap Ngabdi", style: TextStyle(color: Colors.white)),
@@ -223,11 +225,12 @@ class _HomePageState extends State<HomePage> {
       children: [
         _CategoryItem(
           icon: Icons.code,
+
           label: "Materi",
           onTap: (context) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (_) => MateriPage()),
+              MaterialPageRoute(builder: (_) => MateriScreen()),
             );
           },
         ),
@@ -247,7 +250,7 @@ class _HomePageState extends State<HomePage> {
           onTap: (context) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (_) => const Simulasipage()),
+              MaterialPageRoute(builder: (_) => SimulasiScreen()),
             );
           },
         ),
@@ -301,7 +304,7 @@ class _CategoryItem extends StatelessWidget {
             child: Icon(icon, color: Colors.white),
           ),
           const SizedBox(height: 6),
-          Text(label, style: const TextStyle(fontSize: 12)),
+          Text(label, style: AppTextStyles.body),
         ],
       ),
     );
