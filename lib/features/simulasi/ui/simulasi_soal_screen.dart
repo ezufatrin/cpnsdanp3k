@@ -19,7 +19,7 @@ class _SimulasiSoalScreenState extends ConsumerState<SimulasiSoalScreen> {
   late Timer _timer;
   int sisaDetik = 600;
   bool waktuHabis = false;
-  bool _sudahMulai = false;
+  bool sudahMulai = false;
   bool _popupTampil = false;
 
   @override
@@ -62,7 +62,7 @@ class _SimulasiSoalScreenState extends ConsumerState<SimulasiSoalScreen> {
             onPressed: () {
               Navigator.pop(context);
               startTimer();
-              setState(() => _sudahMulai = true);
+              setState(() => sudahMulai = true);
             },
             child: const Text("Mulai Mengerjakan"),
           ),

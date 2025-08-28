@@ -1,4 +1,4 @@
-import 'package:siapngabdi/main_navigation.dart';
+import 'package:siapngabdi/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'login_screen.dart';
@@ -12,7 +12,7 @@ class AuthScreen extends StatelessWidget {
 
     // Cek apakah user sudah login
     if (session != null) {
-      return const MainNavigation();
+      return const Navigation();
     } else {
       return const LoginScreen();
     }

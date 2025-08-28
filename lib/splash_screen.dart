@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:siapngabdi/main_navigation.dart';
+import 'package:siapngabdi/navigation.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.of(context).pushReplacement(
         PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
-              const MainNavigation(),
+              const Navigation(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             // Transisi slide dari bawah
             final slide =

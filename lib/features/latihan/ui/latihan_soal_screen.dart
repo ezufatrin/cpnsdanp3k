@@ -1,68 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import '../soal_provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+import '../provider/soal_provider.dart';
+import '../provider/scroll_providers.dart';
+import '../provider/dependencies.dart';
 
-final soalKeysProvider = StateProvider<Map<int, List<GlobalKey>>>((ref) => {});
-final itemScrollControllerProvider = Provider<ItemScrollController>((ref) {
-  return ItemScrollController();
-});
-
-final itemPositionsListenerProvider = Provider<ItemPositionsListener>((ref) {
-  return ItemPositionsListener.create();
-});
-
-class LatihanSoal extends ConsumerStatefulWidget {
-  const LatihanSoal({super.key});
+class LatihanSoalScreen extends ConsumerStatefulWidget {
+  const LatihanSoalScreen({super.key});
 
   @override
-  ConsumerState<LatihanSoal> createState() => _LatihanSoalState();
+  ConsumerState<LatihanSoalScreen> createState() => _LatihanSoalScreenState();
 }
 
-class _LatihanSoalState extends ConsumerState<LatihanSoal> {
-  final supabase = Supabase.instance.client;
-  final ScrollController scrollController = ScrollController();
-
+class _LatihanSoalScreenState extends ConsumerState<LatihanSoalScreen> {
   @override
   void initState() {
     super.initState();
-    fetchSoal(ref.read(kategoriAktifProvider));
-  }
-
-  Future<void> fetchSoal(int kategoriId) async {
-    final res = await supabase
-        .from('soal')
-        .select()
-        .eq('kategori_id', kategoriId)
-        .order('id');
-
-    final data = List<Map<String, dynamic>>.from(res);
-    ref.read(soalPerKategoriProvider.notifier).simpanSoal(kategoriId, data);
-
-    final currentKeys = ref.read(soalKeysProvider)[kategoriId];
-    if (currentKeys == null || currentKeys.length != data.length) {
-      final newKeys = List.generate(data.length, (_) => GlobalKey());
-      ref
-          .read(soalKeysProvider.notifier)
-          .update((state) => {...state, kategoriId: newKeys});
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final kategoriId = ref.read(kategoriAktifProvider);
+      ref.read(soalProvider.notifier).loadSoal(kategoriId);
+    });
   }
 
   String getHuruf(int index) => String.fromCharCode(65 + index);
 
-  Widget buildKategoriButton(String label, int kategoriId) {
+  Widget _buildKategoriButton(String label, int kategoriId) {
     final selectedId = ref.watch(kategoriAktifProvider);
     final bool isSelected = selectedId == kategoriId;
-    final soalList = ref.watch(soalPerKategoriProvider)[kategoriId] ?? [];
-    final jawabanPerKategori = ref.watch(jawabanPerKategoriProvider);
+    final soalList = ref.watch(soalProvider).soalPerKategori[kategoriId] ?? [];
+    final jawabanPerKategori = ref.watch(soalProvider).jawabanPerKategori;
     final jumlahJawaban = jawabanPerKategori[kategoriId]?.length ?? 0;
 
     return ElevatedButton(
       onPressed: () async {
         if (!isSelected) {
           ref.read(kategoriAktifProvider.notifier).state = kategoriId;
-          await fetchSoal(kategoriId);
+          await ref.read(soalProvider.notifier).loadSoal(kategoriId);
         }
       },
       style: ElevatedButton.styleFrom(
@@ -76,10 +49,33 @@ class _LatihanSoalState extends ConsumerState<LatihanSoal> {
   @override
   Widget build(BuildContext context) {
     final kategoriId = ref.watch(kategoriAktifProvider);
-    final soalList = ref.watch(soalPerKategoriProvider)[kategoriId] ?? [];
-    final jawabanPerKategori = ref.watch(jawabanPerKategoriProvider);
+    final soalState = ref.watch(soalProvider);
+    final soalList = soalState.soalPerKategori[kategoriId] ?? [];
+    final jawabanPerKategori = soalState.jawabanPerKategori;
     final itemScrollController = ref.watch(itemScrollControllerProvider);
     final itemPositionsListener = ref.watch(itemPositionsListenerProvider);
+
+    if (soalState.isLoading && soalList.isEmpty) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+
+    if (soalState.error != null) {
+      return Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Error: ${soalState.error}'),
+              ElevatedButton(
+                onPressed: () =>
+                    ref.read(soalProvider.notifier).loadSoal(kategoriId),
+                child: const Text('Retry'),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(title: const Text('Soal Berdasarkan Kategori')),
@@ -89,9 +85,9 @@ class _LatihanSoalState extends ConsumerState<LatihanSoal> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              buildKategoriButton('TWK', 1),
-              buildKategoriButton('TIU', 2),
-              buildKategoriButton('TKP', 3),
+              _buildKategoriButton('TWK', 1),
+              _buildKategoriButton('TIU', 2),
+              _buildKategoriButton('TKP', 3),
             ],
           ),
           const SizedBox(height: 10),
@@ -124,15 +120,12 @@ class _LatihanSoalState extends ConsumerState<LatihanSoal> {
                         ),
                       ),
                       onPressed: () {
-                        ref
-                            .read(itemScrollControllerProvider)
-                            .scrollTo(
-                              index: index,
-                              duration: const Duration(milliseconds: 500),
-                              curve: Curves.easeInOut,
-                            );
+                        itemScrollController.scrollTo(
+                          index: index,
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.easeInOut,
+                        );
                       },
-
                       child: Text('${index + 1}'),
                     ),
                   ),
@@ -140,9 +133,7 @@ class _LatihanSoalState extends ConsumerState<LatihanSoal> {
               },
             ),
           ),
-
           const SizedBox(height: 10),
-
           Expanded(
             child: ScrollablePositionedList.builder(
               itemScrollController: itemScrollController,
@@ -152,17 +143,13 @@ class _LatihanSoalState extends ConsumerState<LatihanSoal> {
               itemBuilder: (context, index) {
                 final soal = soalList[index];
                 final pilihan = [
-                  soal['pilihan_a'],
-                  soal['pilihan_b'],
-                  soal['pilihan_c'],
-                  soal['pilihan_d'],
-                  soal['pilihan_e'],
+                  soal.pilihanA,
+                  soal.pilihanB,
+                  soal.pilihanC,
+                  soal.pilihanD,
+                  soal.pilihanE,
                 ];
-                final selected = ref.watch(
-                  jawabanPerKategoriProvider.select(
-                    (state) => state[kategoriId]?[index],
-                  ),
-                );
+                final selected = jawabanPerKategori[kategoriId]?[index];
 
                 return Card(
                   margin: const EdgeInsets.only(bottom: 24),
@@ -172,7 +159,7 @@ class _LatihanSoalState extends ConsumerState<LatihanSoal> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Soal ${index + 1}: ${soal['pertanyaan']}',
+                          'Soal ${index + 1}: ${soal.pertanyaan}',
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 12),
@@ -184,7 +171,7 @@ class _LatihanSoalState extends ConsumerState<LatihanSoal> {
                             title: Text('$huruf. ${pilihan[i]}'),
                             onChanged: (val) {
                               ref
-                                  .read(jawabanPerKategoriProvider.notifier)
+                                  .read(soalProvider.notifier)
                                   .jawab(kategoriId, index, val!);
                             },
                           );
